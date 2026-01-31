@@ -7,20 +7,39 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+const getAuthHeaders = (): Record<string, string> => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return { Authorization: `Bearer ${token}` };
+  }
+  return {};
+};
+
 export async function apiRequest(
   method: string,
   url: string,
   data?: unknown | undefined,
-): Promise<Response> {
+): Promise<any> {
+  const headers: Record<string, string> = {
+    ...getAuthHeaders(),
+  };
+  
+  if (data) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
 
   await throwIfResNotOk(res);
-  return res;
+  
+  const text = await res.text();
+  if (!text) return null;
+  return JSON.parse(text);
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
@@ -29,8 +48,13 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const url = Array.isArray(queryKey) 
+      ? queryKey[0] as string 
+      : queryKey as string;
+    
+    const res = await fetch(url, {
       credentials: "include",
+      headers: getAuthHeaders(),
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
