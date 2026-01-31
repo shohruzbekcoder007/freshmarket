@@ -1,0 +1,924 @@
+{
+  "categories": [
+    {
+      "name": "Mevalar",
+      "description": "Toza va yangi mevalar",
+      "image": "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Sabzavotlar",
+      "description": "Yangi sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Sut mahsulotlari",
+      "description": "Sut va sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Non mahsulotlari",
+      "description": "Yangi pishirilgan nonlar",
+      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Go'sht mahsulotlari",
+      "description": "Yangi go'sht",
+      "image": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Ichimliklar",
+      "description": "Sharbatlar va ichimliklar",
+      "image": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Yog' mahsulotlari",
+      "description": "O'simlik va hayvon yog'lari",
+      "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=200&h=200&fit=crop"
+    },
+    {
+      "name": "Don mahsulotlari",
+      "description": "Guruch, makaron va boshqalar",
+      "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=200&fit=crop"
+    }
+  ],
+  "products": [
+    {
+      "name": "Olma (Qizil)",
+      "description": "Yangi qizil olmalar, O'zbekistondan. Vitaminlarga boy, shirin va suvli",
+      "price": 15000,
+      "stock": 100,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Olma (Yashil)",
+      "description": "Nordon yashil olmalar, salatlar uchun ideal",
+      "price": 18000,
+      "stock": 80,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1619546952812-520e98064a52?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Banan",
+      "description": "Ekvadordan import qilingan toza bananlar, vitaminlarga boy",
+      "price": 25000,
+      "stock": 80,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Apelsin",
+      "description": "Shirin va suvli apelsinlar, C vitamini manbai",
+      "price": 22000,
+      "stock": 60,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Mandarin",
+      "description": "Shirin mandarinlar, bolalar uchun ideal",
+      "price": 28000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Uzum (Qora)",
+      "description": "Shirin qora uzum, antioksidantlarga boy",
+      "price": 35000,
+      "stock": 40,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Uzum (Oq)",
+      "description": "Shirin oq uzum, desert uchun ideal",
+      "price": 32000,
+      "stock": 35,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1596363505729-4190a9506133?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Anor",
+      "description": "Qizil donali anor, immunitetni mustahkamlaydi",
+      "price": 40000,
+      "stock": 30,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Nok",
+      "description": "Shirin va suvli nok, ovqat hazm qilishga yordam beradi",
+      "price": 20000,
+      "stock": 45,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1514756331096-242fdeb70d4a?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Limon",
+      "description": "Yangi limonlar, choy va ovqatlarga",
+      "price": 30000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1590502593747-42a996133562?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Pomidor",
+      "description": "Yangi qizil pomidorlar, salat va ovqatlar uchun",
+      "price": 12000,
+      "stock": 150,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1546470427-0d4db154cced?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Bodring",
+      "description": "Toza bodringlar, salat uchun ideal",
+      "price": 8000,
+      "stock": 120,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kartoshka",
+      "description": "Yangi kartoshka, qovurmalar va sho'rvalar uchun",
+      "price": 7000,
+      "stock": 200,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1508313880080-c4bef0730395?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Sabzi",
+      "description": "Toza sabzi, vitaminlarga boy",
+      "price": 6000,
+      "stock": 100,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Piyoz",
+      "description": "Sariq piyoz, barcha ovqatlar uchun",
+      "price": 5000,
+      "stock": 180,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Sarimsoq",
+      "description": "Yangi sarimsoq, immunitetni oshiradi",
+      "price": 25000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2f79?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qalampir (Bolgar)",
+      "description": "Rangli bolgar qalampiri, salatlarga",
+      "price": 18000,
+      "stock": 60,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Karam",
+      "description": "Oq karam, sho'rva va salatlar uchun",
+      "price": 4000,
+      "stock": 80,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Baqlajon",
+      "description": "Yangi baqlajon, qovurmalar uchun",
+      "price": 10000,
+      "stock": 70,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1528505086635-4c69d5f10571?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qovoq",
+      "description": "Sariq qovoq, osh va manti uchun",
+      "price": 6000,
+      "stock": 90,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Sut (1 litr)",
+      "description": "Toza sigir suti, 3.2% yog'li",
+      "price": 12000,
+      "stock": 50,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qatiq (1 kg)",
+      "description": "Uy qatiqi, tabiiy va foydali",
+      "price": 18000,
+      "stock": 40,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Pishloq (1 kg)",
+      "description": "Mahalliy pishloq, tabiiy va mazali",
+      "price": 85000,
+      "stock": 25,
+      "unit": "kg",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Sariyog' (200g)",
+      "description": "Tabiiy sariyog', nonushta uchun",
+      "price": 22000,
+      "stock": 60,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Smetana (400g)",
+      "description": "Smetana, 20% yog'li",
+      "price": 15000,
+      "stock": 45,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1628689469838-524a4a973b8e?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Tvorog (500g)",
+      "description": "Uy tvorogi, protein manbai",
+      "price": 20000,
+      "stock": 35,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1617114919297-3c8ddb01f599?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "O'zbek noni",
+      "description": "An'anaviy tandirda pishirilgan non",
+      "price": 5000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Non mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Patir",
+      "description": "Yumshoq patir, nonushta uchun",
+      "price": 8000,
+      "stock": 60,
+      "unit": "dona",
+      "category": "Non mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Lavash",
+      "description": "Yupqa lavash, durmalar uchun",
+      "price": 4000,
+      "stock": 80,
+      "unit": "dona",
+      "category": "Non mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Somsa non",
+      "description": "Somsa uchun maxsus non",
+      "price": 3000,
+      "stock": 120,
+      "unit": "dona",
+      "category": "Non mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Mol go'shti",
+      "description": "Yangi mol go'shti, birinchi nav",
+      "price": 95000,
+      "stock": 30,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qo'y go'shti",
+      "description": "Yangi qo'y go'shti, osh uchun ideal",
+      "price": 110000,
+      "stock": 25,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Tovuq go'shti",
+      "description": "Broiler tovuq, butun",
+      "price": 45000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Tovuq filesi",
+      "description": "Tovuq ko'krak filesi, dietik",
+      "price": 55000,
+      "stock": 40,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Jigar (Mol)",
+      "description": "Yangi mol jigari, temir manbai",
+      "price": 60000,
+      "stock": 20,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1624174503860-478619028ab3?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Olma sharbati (1L)",
+      "description": "100% natural olma sharbati",
+      "price": 15000,
+      "stock": 80,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1576673442511-7e39b6545c87?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Apelsin sharbati (1L)",
+      "description": "Yangi siqilgan apelsin sharbati",
+      "price": 18000,
+      "stock": 60,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Mineral suv (1.5L)",
+      "description": "Gazlangan mineral suv",
+      "price": 5000,
+      "stock": 200,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1560023907-5f339617ea30?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kompot (3L)",
+      "description": "Uy kompoti, aralash mevalardan",
+      "price": 25000,
+      "stock": 40,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Yashil choy (100g)",
+      "description": "Sifatli yashil choy",
+      "price": 35000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qora choy (100g)",
+      "description": "An'anaviy qora choy",
+      "price": 30000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "O'simlik yog'i (1L)",
+      "description": "Tozalangan o'simlik yog'i",
+      "price": 28000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Yog' mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Zaytun yog'i (500ml)",
+      "description": "Extra virgin zaytun yog'i",
+      "price": 75000,
+      "stock": 30,
+      "unit": "dona",
+      "category": "Yog' mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1510627498534-cf7e9002facc?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Paxta yog'i (1L)",
+      "description": "Tabiiy paxta yog'i, osh uchun",
+      "price": 35000,
+      "stock": 50,
+      "unit": "dona",
+      "category": "Yog' mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Guruch (Laser)",
+      "description": "Yuqori sifatli laser guruch, osh uchun",
+      "price": 32000,
+      "stock": 100,
+      "unit": "kg",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Guruch (Devzira)",
+      "description": "O'zbek devzira guruchi, palov uchun ideal",
+      "price": 45000,
+      "stock": 60,
+      "unit": "kg",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Makaron (Spaghetti)",
+      "description": "Italyan spaghetti, 500g",
+      "price": 12000,
+      "stock": 80,
+      "unit": "dona",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Makaron (Penne)",
+      "description": "Penne makaron, 500g",
+      "price": 12000,
+      "stock": 70,
+      "unit": "dona",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Loviya (Oq)",
+      "description": "Quritilgan oq loviya",
+      "price": 18000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1606948093531-f0a6a0b69e8c?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "No'xat",
+      "description": "Quritilgan no'xat, sho'rva uchun",
+      "price": 15000,
+      "stock": 60,
+      "unit": "kg",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Mosh",
+      "description": "Yangi mosh, sho'rva uchun ideal",
+      "price": 22000,
+      "stock": 40,
+      "unit": "kg",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1612257416648-ee7a6c5b17eb?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kivi",
+      "description": "Yangi kivi mevalari, C vitamini manbai",
+      "price": 45000,
+      "stock": 30,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1585059895524-72359e06133a?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Shaftoli",
+      "description": "Shirin va suvli shaftolilar",
+      "price": 38000,
+      "stock": 35,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1629828874514-c1e5103f2400?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "O'rik",
+      "description": "Yangi o'riklar, vitaminlarga boy",
+      "price": 30000,
+      "stock": 40,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1592681814168-6df0fa93161b?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qulupnay",
+      "description": "Yangi qulupnaylar, desert uchun ideal",
+      "price": 55000,
+      "stock": 25,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Gilos",
+      "description": "Shirin qizil gilos",
+      "price": 60000,
+      "stock": 20,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Tarvuz",
+      "description": "Shirin va suvli tarvuz",
+      "price": 8000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qovun",
+      "description": "Shirin O'zbek qovuni",
+      "price": 12000,
+      "stock": 40,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1568702846914-96b305d2efa7?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Rediska",
+      "description": "Yangi rediska, salatlarga",
+      "price": 10000,
+      "stock": 60,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1585697392913-023bdfa2d4e6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Ukrop",
+      "description": "Yangi ukrop, ovqatlarga xushbo'ylik beradi",
+      "price": 8000,
+      "stock": 80,
+      "unit": "bog'",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1592561199818-6b69d3d1c909?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Jag'jag' (Kinza)",
+      "description": "Yangi jag'jag', go'shtli ovqatlarga",
+      "price": 8000,
+      "stock": 70,
+      "unit": "bog'",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Shivit",
+      "description": "Yangi shivit, somsa va mantiga",
+      "price": 7000,
+      "stock": 90,
+      "unit": "bog'",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kunjut",
+      "description": "Oq kunjut, nonlarga",
+      "price": 35000,
+      "stock": 30,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1612203985729-70726954388c?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Ismaloq",
+      "description": "Yangi ismaloq, sho'rva va salatlarga",
+      "price": 15000,
+      "stock": 50,
+      "unit": "kg",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Yogurt (400g)",
+      "description": "Tabiiy yogurt, foydali bakteriyalar",
+      "price": 14000,
+      "stock": 60,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kefir (1L)",
+      "description": "Tabiiy kefir, hazm qilishga yordam beradi",
+      "price": 15000,
+      "stock": 50,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qaymoq (200g)",
+      "description": "Tabiiy qaymoq, nonushta uchun",
+      "price": 25000,
+      "stock": 40,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Bulka",
+      "description": "Yumshoq bulka, nonushta uchun",
+      "price": 3000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Non mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kruassan",
+      "description": "Fransuz kruassani, sariyog'li",
+      "price": 12000,
+      "stock": 50,
+      "unit": "dona",
+      "category": "Non mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Tuxum (10 dona)",
+      "description": "Yangi tovuq tuxumi",
+      "price": 25000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Sut mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Qazi",
+      "description": "An'anaviy O'zbek qazisi",
+      "price": 150000,
+      "stock": 15,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kolbasa (Doktorskaya)",
+      "description": "Doktor kolbasasi, 500g",
+      "price": 45000,
+      "stock": 40,
+      "unit": "dona",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1626082929543-ee3001fcfedc?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Baliq (Salmon)",
+      "description": "Yangi salmon baliqi",
+      "price": 180000,
+      "stock": 10,
+      "unit": "kg",
+      "category": "Go'sht mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1574781330855-d0db8cc6a79c?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kofe (250g)",
+      "description": "Arabika kofe donalari",
+      "price": 65000,
+      "stock": 50,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kakao (200g)",
+      "description": "Tabiiy kakao kukuni",
+      "price": 35000,
+      "stock": 40,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Limonad (1.5L)",
+      "description": "Gazlangan limonad",
+      "price": 8000,
+      "stock": 150,
+      "unit": "dona",
+      "category": "Ichimliklar",
+      "image": "https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Kunjut yog'i (250ml)",
+      "description": "Tabiiy kunjut yog'i",
+      "price": 45000,
+      "stock": 30,
+      "unit": "dona",
+      "category": "Yog' mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Bug'doy uni (2kg)",
+      "description": "Yuqori navli bug'doy uni",
+      "price": 18000,
+      "stock": 80,
+      "unit": "dona",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Shakar (1kg)",
+      "description": "Oq shakar",
+      "price": 12000,
+      "stock": 100,
+      "unit": "dona",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Tuz (1kg)",
+      "description": "Osh tuzi",
+      "price": 3000,
+      "stock": 150,
+      "unit": "dona",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Asal (500g)",
+      "description": "Tabiiy asal, tog' asali",
+      "price": 80000,
+      "stock": 25,
+      "unit": "dona",
+      "category": "Don mahsulotlari",
+      "image": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Mayiz",
+      "description": "Quritilgan uzum (mayiz)",
+      "price": 40000,
+      "stock": 35,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1596363505729-4190a9506133?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Yong'oq",
+      "description": "Yangi yong'oq, miya uchun foydali",
+      "price": 75000,
+      "stock": 30,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1563412885-139e4045ec54?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Bodom",
+      "description": "Quritilgan bodom",
+      "price": 90000,
+      "stock": 25,
+      "unit": "kg",
+      "category": "Mevalar",
+      "image": "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Pomidor pastasi (500g)",
+      "description": "Konservalangan pomidor pastasi",
+      "price": 15000,
+      "stock": 60,
+      "unit": "dona",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=400&h=400&fit=crop",
+      "isActive": true
+    },
+    {
+      "name": "Bodring (Tuzlangan)",
+      "description": "Tuzlangan bodring, bankada",
+      "price": 20000,
+      "stock": 45,
+      "unit": "dona",
+      "category": "Sabzavotlar",
+      "image": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400&h=400&fit=crop",
+      "isActive": true
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@freshmarket.uz",
+      "password": "admin123",
+      "role": "admin",
+      "phone": "+998 90 123 45 67",
+      "address": "Toshkent, Mirzo Ulug'bek tumani"
+    },
+    {
+      "username": "testuser",
+      "email": "user@freshmarket.uz",
+      "password": "user123",
+      "role": "user",
+      "phone": "+998 91 234 56 78",
+      "address": "Toshkent, Chilonzor tumani"
+    }
+  ]
+}

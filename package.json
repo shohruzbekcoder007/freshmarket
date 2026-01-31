@@ -9,7 +9,8 @@
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
     "seed:ai": "tsx server/ai/seed-lancedb.ts",
-    "check:ai": "tsx server/ai/check-lancedb.ts"
+    "check:ai": "tsx server/ai/check-lancedb.ts",
+    "import:data": "tsx server/data/import-data.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
