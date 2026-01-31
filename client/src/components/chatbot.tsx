@@ -140,7 +140,10 @@ export function Chatbot() {
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsExpanded(false);
+                  }}
                 >
                   <X className="h-5 w-5" />
                 </Button>
