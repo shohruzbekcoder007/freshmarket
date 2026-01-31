@@ -46,7 +46,8 @@ export async function createProductTable(data: any[]) {
       name: p.name,
       price: p.price,
       category: p.category,
-      stock: p.stock
+      stock: p.stock,
+      unit: p.unit
     });
   }
 
