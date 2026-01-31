@@ -13,7 +13,7 @@ export async function generateChatResponseStream(
   chatHistory: ChatMessage[] = []
 ) {
   const contextText = contextProducts.map(p =>
-    `- Mahsulot: ${p.name}\n  Narxi: ${p.price} so'm\n  Kategoriya: ${p.category}\n  Qolgan: ${p.stock} ${p.unit}\n  Tavsif: ${p.description || ""}`
+    `- Mahsulot: ${p.name}\n  ID: ${p.id}\n  Link: /products/${p.id}\n  Narxi: ${p.price} so'm\n  Kategoriya: ${p.category}\n  Qolgan: ${p.stock} ${p.unit}\n  Tavsif: ${p.description || ""}`
   ).join("\n\n");
 
   const systemPrompt = `
@@ -53,6 +53,15 @@ QUYIDAGI QOIDALAR ENG USTUVOR HISOBLANADI VA ULARGA AMAL QILISH MAJBURIY:
    - Narxini so'mda ayting
    - Qisqa tarif bering
    - Xaridga undang
+
+🔗 MAHSULOT LINKI QOIDALARI (EHTIYOTKORLIK BILAN):
+   - FAQAT foydalanuvchi SO'RAGAN mahsulotga link bering
+   - Agar foydalanuvchi "olma" desa - faqat olmaga link
+   - Agar foydalanuvchi "mevalar" desa - bir nechta mevaga link berish mumkin
+   - Link formati: [Mahsulot nomi](/products/ID)
+   - Masalan: [Olma (Qizil)](/products/679e0a14df7ac627c44b1e6c)
+   - TAQIQLANADI: So'ralmagan mahsulotlarga link berish
+   - TAQIQLANADI: Har bir javobda ko'p linklar berish (faqat kerakli bo'lsa)
 
 🔴 FAQAT QUYIDAGI HOLATDA "BIZDA YO'Q" DEYISH MUMKIN:
 8. Foydalanuvchi aniq mahsulot nomini aytsa

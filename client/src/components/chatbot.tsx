@@ -5,6 +5,41 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Link } from "wouter";
+
+// Markdown linkni parse qilish: [text](url) -> <Link>
+function renderTextWithLinks(text: string) {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts: (string | JSX.Element)[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    // Link oldidagi oddiy text
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    // Link elementi
+    const [, linkText, linkUrl] = match;
+    parts.push(
+      <Link
+        key={match.index}
+        href={linkUrl}
+        className="text-primary underline hover:text-primary/80 font-medium"
+      >
+        {linkText}
+      </Link>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Oxirgi qism
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : [text];
+}
 
 interface Message {
   role: "bot" | "user";
@@ -237,7 +272,7 @@ export function Chatbot() {
                       >
                         {msg.content.split('\n').map((line, i) => (
                           <React.Fragment key={i}>
-                            {line}
+                            {msg.role === "bot" ? renderTextWithLinks(line) : line}
                             {i < msg.content.split('\n').length - 1 && <br />}
                           </React.Fragment>
                         ))}
