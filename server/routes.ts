@@ -1,11 +1,11 @@
 import type { Express, Request, Response, NextFunction } from "express";
-import { createServer, type Server } from "http";
+import { type Server } from "http";
 import { storage } from "./storage";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { insertUserSchema, insertCategorySchema, insertProductSchema, insertCartItemSchema, insertOrderSchema } from "@shared/schema";
+import { insertUserSchema, insertCartItemSchema } from "@shared/schema";
 import { searchProducts } from "./ai/lancedb";
-import { generateChatResponse } from "./ai/openai";
+import { generateChatResponseStream } from "./ai/openai";
 
 const JWT_SECRET = process.env.SESSION_SECRET;
 if (!JWT_SECRET) {
@@ -439,17 +439,31 @@ export async function registerRoutes(
         return res.status(400).json({ message: "Xabar yuborilmadi" });
       }
 
-      // 1. Bazadan o'xshash mahsulotlarni qidirish (Context uchun)
-      // Eng relevant 3 ta mahsulotni olamiz
+      // 1. Bazadan o'xshash mahsulotlarni qidirish
       const results = await searchProducts(message, 3);
 
-      // 2. OpenAI orqali javob olish (RAG - Retrieval Augmented Generation)
-      const reply = await generateChatResponse(message, results);
+      // 2. Headerlarni sozlash (Streaming uchun)
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Transfer-Encoding", "chunked");
 
-      res.json({ reply });
+      // 3. OpenAI Stream
+      const stream = await generateChatResponseStream(message, results);
+
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content || "";
+        if (content) {
+          res.write(content);
+        }
+      }
+
+      res.end();
     } catch (error) {
       console.error("Chat error:", error);
-      res.status(500).json({ reply: "Tizimda xatolik yuz berdi, iltimos keyinroq urinib ko'ring." });
+      if (!res.headersSent) {
+        res.status(500).json({ reply: "Tizimda xatolik yuz berdi." });
+      } else {
+        res.end();
+      }
     }
   });
 

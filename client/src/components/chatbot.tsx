@@ -48,28 +48,48 @@ export function Chatbot() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
+    // Bo'sh bot xabarini yaratamiz
+    const botMessageId = new Date().getTime();
+    setMessages((prev) => [
+      ...prev,
+      { role: "bot", content: "", timestamp: new Date() } // id qo'shish kerak aslida, lekin hozircha array index yetadi
+    ]);
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
       });
-      
-      const data = await response.json();
-      
-      const botResponse: Message = {
-        role: "bot",
-        content: data.reply,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botResponse]);
+
+      if (!response.body) return;
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value, { stream: true });
+
+        setMessages((prev) => {
+          const newMessages = [...prev];
+          const lastMessage = newMessages[newMessages.length - 1];
+          if (lastMessage.role === "bot") {
+            lastMessage.content += chunkValue;
+          }
+          return newMessages;
+        });
+      }
     } catch (error) {
-      const botResponse: Message = {
-        role: "bot",
-        content: "Aloqa uzildi, iltimos keyinroq urinib ko'ring.",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botResponse]);
+      console.error("Chat error:", error);
+      setMessages((prev) => {
+        const newMessages = [...prev];
+        const lastMessage = newMessages[newMessages.length - 1];
+        lastMessage.content = "Aloqa uzildi, iltimos keyinroq urinib ko'ring.";
+        return newMessages;
+      });
     }
   };
 

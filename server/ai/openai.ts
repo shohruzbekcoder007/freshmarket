@@ -4,17 +4,14 @@ import OpenAI from "openai";
 // API kalit avtomatik ravishda process.env.OPENAI_API_KEY dan olinadi
 const openai = new OpenAI();
 
-export async function generateChatResponse(userMessage: string, contextProducts: any[]) {
-  // Topilgan mahsulotlarni matn ko'rinishiga keltiramiz
+export async function generateChatResponseStream(userMessage: string, contextProducts: any[]) {
   const contextText = contextProducts.map(p =>
     `- Mahsulot: ${p.name}\n  Narxi: ${p.price} so'm\n  Kategoriya: ${p.category}\n  Qolgan: ${p.stock} ${p.unit}\n  Tavsif: ${p.description}`
   ).join("\n\n");
 
-  console.log("Context Text for AI:", contextText);
+  console.log("Context Text for AI (Stream):", contextText);
 
-  // Tizim promptini yaratamiz
-
-const systemPrompt = `
+  const systemPrompt = `
 Siz FreshMarket onlayn do'konining aqlli, xushmuomala va savdoga yo'naltirilgan yordamchisisiz.
 Sizning asosiy vazifangiz — mijozlarga FreshMarket orqali oziq-ovqat xarid qilishda yordam berish.
 
@@ -71,21 +68,13 @@ MAVJUD MAHSULOTLAR (FAKAT SHU RO‘YXATGA TAYANING):
 ${contextText}
 `;
 
-
-
-  try {
-    const completion = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userMessage },
-      ],
-      model: "gpt-4o-mini", // Yoki "gpt-4o" agar imkoningiz bo'lsa
-      temperature: 0.7,
-    });
-
-    return completion.choices[0].message.content;
-  } catch (error) {
-    console.error("OpenAI API Error:", error);
-    return "Uzr, tizimda vaqtinchalik xatolik yuz berdi.";
-  }
+  return await openai.chat.completions.create({
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userMessage },
+    ],
+    model: "gpt-4o-mini",
+    temperature: 0.7,
+    stream: true, // Streaming yoqildi
+  });
 }
