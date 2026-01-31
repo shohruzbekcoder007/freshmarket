@@ -14,6 +14,7 @@ import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
 import Orders from "@/pages/orders";
 import AdminLayout from "@/pages/admin";
+import { Chatbot } from "@/components/chatbot";
 
 function Router() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <Chatbot />
         </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
