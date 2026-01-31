@@ -147,7 +147,7 @@ export interface IStorage {
   createOrderItem(item: InsertOrderItem): Promise<OrderItem>;
 
   // Chat
-  getChatHistory(userId?: string, sessionId?: string): Promise<ChatMessage[]>;
+  getChatHistory(userId?: string, sessionId?: string, limit?: number): Promise<ChatMessage[]>;
   saveChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
 }
 
@@ -418,14 +418,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Chat
-  async getChatHistory(userId?: string, sessionId?: string): Promise<ChatMessage[]> {
+  async getChatHistory(userId?: string, sessionId?: string, limit: number = 20): Promise<ChatMessage[]> {
     const query: any = {};
     if (userId) query.userId = userId;
     else if (sessionId) query.sessionId = sessionId;
     else return [];
 
-    const docs = await ChatMessageModel.find(query).sort({ createdAt: 1 });
-    return docs.map(toChatMessage);
+    // Oxirgi xabarlarni olish uchun createdAt bo'yicha teskari tartibda saralaymiz va limit qo'yamiz
+    const docs = await ChatMessageModel.find(query)
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    
+    // UI-da to'g'ri ko'rinishi uchun xabarlarni yana vaqt bo'yicha (o'sish tartibida) qaytaramiz
+    return docs.reverse().map(toChatMessage);
   }
 
   async saveChatMessage(message: InsertChatMessage): Promise<ChatMessage> {
