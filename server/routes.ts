@@ -432,29 +432,98 @@ export async function registerRoutes(
   });
 
   // ============ CHATBOT ROUTE ============
-  app.post("/api/chat", async (req, res) => {
+
+  // Get chat history
+  app.get("/api/chat/history", async (req: Request & { user?: any }, res) => {
+    try {
+      // Try to get user from token if available (optional auth)
+      const authHeader = req.headers.authorization;
+      const token = authHeader && authHeader.split(" ")[1];
+      let userId: string | undefined;
+      const sessionId = req.headers["x-session-id"] as string;
+
+      if (token && JWT_SECRET) {
+        try {
+          const decoded = jwt.verify(token, JWT_SECRET) as any;
+          userId = decoded.id;
+        } catch (e) {
+          // Token invalid, ignore
+        }
+      }
+
+      if (!userId && !sessionId) {
+        return res.json([]);
+      }
+
+      const history = await storage.getChatHistory(userId, sessionId);
+      res.json(history);
+    } catch (error) {
+      console.error("Get chat history error:", error);
+      res.status(500).json({ message: "Tarixni yuklashda xatolik" });
+    }
+  });
+
+  app.post("/api/chat", async (req: Request & { user?: any }, res) => {
     try {
       const { message } = req.body;
+      const sessionId = req.headers["x-session-id"] as string;
+      
       if (!message) {
         return res.status(400).json({ message: "Xabar yuborilmadi" });
       }
 
-      // 1. Bazadan o'xshash mahsulotlarni qidirish
-      const results = await searchProducts(message, 3);
+      // Identify user
+      const authHeader = req.headers.authorization;
+      const token = authHeader && authHeader.split(" ")[1];
+      let userId: string | undefined;
+      if (token && JWT_SECRET) {
+        try {
+          const decoded = jwt.verify(token, JWT_SECRET) as any;
+          userId = decoded.id;
+        } catch (e) {}
+      }
 
-      // 2. Headerlarni sozlash (Streaming uchun)
+      // 1. Get history for OpenAI context (last 10 messages)
+      const history = await storage.getChatHistory(userId, sessionId);
+      const lastMessages = history.slice(-10).map(m => ({
+        role: m.role === "bot" ? "assistant" as const : "user" as const,
+        content: m.content
+      }));
+
+      // 2. Save user message to DB
+      await storage.saveChatMessage({
+        userId,
+        sessionId,
+        role: "user",
+        content: message
+      });
+
+      // 3. Search relevant products (RAG)
+      const results = await searchProducts(message, 5);
+
+      // 4. Headerlarni sozlash (Streaming uchun)
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       res.setHeader("Transfer-Encoding", "chunked");
 
-      // 3. OpenAI Stream
-      const stream = await generateChatResponseStream(message, results);
+      // 5. OpenAI Stream with history (openai.ts dan)
+      const stream = await generateChatResponseStream(message, results, lastMessages);
 
+      let fullReply = "";
       for await (const chunk of stream) {
         const content = chunk.choices[0]?.delta?.content || "";
         if (content) {
+          fullReply += content;
           res.write(content);
         }
       }
+
+      // 6. Save bot response to DB
+      await storage.saveChatMessage({
+        userId,
+        sessionId,
+        role: "bot",
+        content: fullReply
+      });
 
       res.end();
     } catch (error) {

@@ -245,6 +245,43 @@ export type OrderItem = {
   productName: string;
 };
 
+// ============ CHAT MESSAGE ============
+export interface IChatMessage extends Document {
+  _id: mongoose.Types.ObjectId;
+  userId?: mongoose.Types.ObjectId; // Optional for guest users (session based later maybe)
+  sessionId?: string; // For guests
+  role: "user" | "bot";
+  content: string;
+  createdAt: Date;
+}
+
+const chatMessageSchema = new Schema<IChatMessage>({
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  sessionId: { type: String },
+  role: { type: String, enum: ["user", "bot"], required: true },
+  content: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+export const ChatMessageModel = mongoose.model<IChatMessage>("ChatMessage", chatMessageSchema);
+
+export const insertChatMessageSchema = z.object({
+  userId: z.string().optional(),
+  sessionId: z.string().optional(),
+  role: z.enum(["user", "bot"]),
+  content: z.string().min(1),
+});
+
+export type InsertChatMessage = z.infer<typeof insertChatMessageSchema>;
+export type ChatMessage = {
+  id: string;
+  userId?: string | null;
+  sessionId?: string | null;
+  role: "user" | "bot";
+  content: string;
+  createdAt: Date;
+};
+
 // ============ EXTENDED TYPES ============
 export type ProductWithCategory = Product & { category?: Category };
 export type CartItemWithProduct = CartItem & { product: Product };

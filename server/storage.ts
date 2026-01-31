@@ -17,6 +17,9 @@ import {
   type InsertOrder,
   type OrderItem,
   type InsertOrderItem,
+  type ChatMessage,
+  type InsertChatMessage,
+  ChatMessageModel,
   type ProductWithCategory,
   type CartItemWithProduct,
   type OrderWithItems,
@@ -94,6 +97,17 @@ function toOrderItem(doc: any): OrderItem {
   };
 }
 
+function toChatMessage(doc: any): ChatMessage {
+  return {
+    id: doc._id.toString(),
+    userId: doc.userId?.toString() || null,
+    sessionId: doc.sessionId || null,
+    role: doc.role,
+    content: doc.content,
+    createdAt: doc.createdAt,
+  };
+}
+
 export interface IStorage {
   // Users
   getUser(id: string): Promise<User | undefined>;
@@ -131,6 +145,10 @@ export interface IStorage {
   createOrder(order: InsertOrder): Promise<Order>;
   updateOrderStatus(id: string, status: string): Promise<Order | undefined>;
   createOrderItem(item: InsertOrderItem): Promise<OrderItem>;
+
+  // Chat
+  getChatHistory(userId?: string, sessionId?: string): Promise<ChatMessage[]>;
+  saveChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -397,6 +415,22 @@ export class DatabaseStorage implements IStorage {
       price: typeof item.price === 'string' ? parseFloat(item.price) : item.price,
     });
     return toOrderItem(doc);
+  }
+
+  // Chat
+  async getChatHistory(userId?: string, sessionId?: string): Promise<ChatMessage[]> {
+    const query: any = {};
+    if (userId) query.userId = userId;
+    else if (sessionId) query.sessionId = sessionId;
+    else return [];
+
+    const docs = await ChatMessageModel.find(query).sort({ createdAt: 1 });
+    return docs.map(toChatMessage);
+  }
+
+  async saveChatMessage(message: InsertChatMessage): Promise<ChatMessage> {
+    const doc = await ChatMessageModel.create(message);
+    return toChatMessage(doc);
   }
 }
 

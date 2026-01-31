@@ -16,15 +16,62 @@ export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "bot",
-      content: "Assalomu alaykum! FreshMarket yordamchisiga xush kelibsiz. Sizga qanday yordam bera olaman?",
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Get or create sessionId for guests
+  const getSessionId = () => {
+    let sid = localStorage.getItem("chat_session_id");
+    if (!sid) {
+      sid = Math.random().toString(36).substring(7);
+      localStorage.setItem("chat_session_id", sid);
+    }
+    return sid;
+  };
+
+  // Load history on mount or when chat opens
+  useEffect(() => {
+    const loadHistory = async () => {
+      setIsLoadingHistory(true);
+      try {
+        const token = localStorage.getItem("token");
+        const headers: any = {
+          "x-session-id": getSessionId(),
+        };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
+        const response = await fetch("/api/chat/history", { headers });
+        const history = await response.json();
+        
+        if (history && history.length > 0) {
+          setMessages(history.map((m: any) => ({
+            role: m.role,
+            content: m.content,
+            timestamp: new Date(m.createdAt)
+          })));
+        } else {
+          // Default welcome message if no history
+          setMessages([
+            {
+              role: "bot",
+              content: "Assalomu alaykum! FreshMarket yordamchisiga xush kelibsiz. Sizga qanday yordam bera olaman?",
+              timestamp: new Date(),
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Load history error:", error);
+      } finally {
+        setIsLoadingHistory(false);
+      }
+    };
+
+    if (isOpen && messages.length === 0) {
+      loadHistory();
+    }
+  }, [isOpen]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -39,9 +86,11 @@ export function Chatbot() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
+    const messageText = input.trim(); // Xabarni saqlash
+
     const userMessage: Message = {
       role: "user",
-      content: input,
+      content: messageText,
       timestamp: new Date(),
     };
 
@@ -49,17 +98,23 @@ export function Chatbot() {
     setInput("");
 
     // Bo'sh bot xabarini yaratamiz
-    const botMessageId = new Date().getTime();
     setMessages((prev) => [
       ...prev,
-      { role: "bot", content: "", timestamp: new Date() } // id qo'shish kerak aslida, lekin hozircha array index yetadi
+      { role: "bot", content: "", timestamp: new Date() }
     ]);
 
     try {
+      const token = localStorage.getItem("token");
+      const headers: any = {
+        "Content-Type": "application/json",
+        "x-session-id": getSessionId(),
+      };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+        headers: headers,
+        body: JSON.stringify({ message: messageText }), // Saqlangan xabarni ishlatish
       });
 
       if (!response.body) return;

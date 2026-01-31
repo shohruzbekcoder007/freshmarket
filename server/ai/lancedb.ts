@@ -44,6 +44,7 @@ export async function createProductTable(data: any[]) {
       vector: vector,
       text: text,
       name: p.name,
+      description: p.description || "",
       price: p.price,
       category: p.category,
       stock: p.stock,
