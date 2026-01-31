@@ -4,7 +4,7 @@ class LocalEmbeddingFunction {
   private pipe: any;
   private modelRepo: string;
 
-  constructor(modelRepo: string = "Xenova/paraphrase-multilingual-MiniLM-L12-v2") {
+  constructor(modelRepo: string = "Xenova/bge-m3") {
     this.modelRepo = modelRepo;
   }
 

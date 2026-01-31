@@ -34,7 +34,7 @@ export function Chatbot() {
     }
   }, [messages, isOpen]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMessage: Message = {
@@ -46,15 +46,29 @@ export function Chatbot() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // Simulate bot response
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+      
+      const data = await response.json();
+      
       const botResponse: Message = {
         role: "bot",
-        content: "Hozircha men faqat test rejimida ishlayapman. Tez orada sizning barcha savollaringizga javob bera olaman!",
+        content: data.reply,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, botResponse]);
-    }, 1000);
+    } catch (error) {
+      const botResponse: Message = {
+        role: "bot",
+        content: "Aloqa uzildi, iltimos keyinroq urinib ko'ring.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, botResponse]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { insertUserSchema, insertCategorySchema, insertProductSchema, insertCartItemSchema, insertOrderSchema } from "@shared/schema";
+import { searchProducts } from "./ai/lancedb";
 
 const JWT_SECRET = process.env.SESSION_SECRET;
 if (!JWT_SECRET) {
@@ -426,6 +427,39 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Admin get users error:", error);
       res.status(500).json({ message: "Foydalanuvchilarni olishda xatolik" });
+    }
+  });
+
+  // ============ CHATBOT ROUTE ============
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { message } = req.body;
+      if (!message) {
+        return res.status(400).json({ message: "Xabar yuborilmadi" });
+      }
+
+      // 1. Bazadan o'xshash mahsulotlarni qidirish
+      const results = await searchProducts(message);
+
+      // 2. Javobni shakllantirish
+      if (results.length === 0) {
+        return res.json({ 
+          reply: "Uzr, hozircha bu haqda ma'lumot topa olmadim. Boshqa mahsulot haqida so'rab ko'ring." 
+        });
+      }
+
+      // Eng yaqin natijani olish
+      const topMatch = results[0];
+      let reply = `Sizni qiziqtirgan mahsulot bo'yicha ma'lumot:\n\n*${topMatch.name}*\n- Ta'rif: ${topMatch.text.split(".")[1]}\n- Narxi: ${topMatch.price} so'm\n- Kategoriya: ${topMatch.category}`;
+
+      if (results.length > 1) {
+        reply += `\n\nShuningdek, bizda shunga o'xshash ${results[1].name} ham bor.`;
+      }
+
+      res.json({ reply });
+    } catch (error) {
+      console.error("Chat error:", error);
+      res.status(500).json({ reply: "Tizimda xatolik yuz berdi, iltimos keyinroq urinib ko'ring." });
     }
   });
 
