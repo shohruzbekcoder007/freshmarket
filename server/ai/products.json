@@ -1,0 +1,155 @@
+[
+  {
+    "id": "1",
+    "name": "Olma (Qizil)",
+    "description": "Yangi qizil olmalar, O'zbekistondan",
+    "price": 15000,
+    "category": "Mevalar",
+    "stock": 100,
+    "unit": "kg"
+  },
+  {
+    "id": "2",
+    "name": "Banan",
+    "description": "Ekvadordan import qilingan toza bananlar",
+    "price": 25000,
+    "category": "Mevalar",
+    "stock": 80,
+    "unit": "kg"
+  },
+  {
+    "id": "3",
+    "name": "Apelsin",
+    "description": "Shirin va suvli apelsinlar",
+    "price": 22000,
+    "category": "Mevalar",
+    "stock": 60,
+    "unit": "kg"
+  },
+  {
+    "id": "4",
+    "name": "Uzum (Qora)",
+    "description": "Shirin qora uzum",
+    "price": 35000,
+    "category": "Mevalar",
+    "stock": 40,
+    "unit": "kg"
+  },
+  {
+    "id": "5",
+    "name": "Pomidor",
+    "description": "Yangi qizil pomidorlar",
+    "price": 12000,
+    "category": "Sabzavotlar",
+    "stock": 150,
+    "unit": "kg"
+  },
+  {
+    "id": "6",
+    "name": "Bodring",
+    "description": "Toza bodringlar",
+    "price": 8000,
+    "category": "Sabzavotlar",
+    "stock": 120,
+    "unit": "kg"
+  },
+  {
+    "id": "7",
+    "name": "Kartoshka",
+    "description": "Yangi kartoshka",
+    "price": 7000,
+    "category": "Sabzavotlar",
+    "stock": 200,
+    "unit": "kg"
+  },
+  {
+    "id": "8",
+    "name": "Sabzi",
+    "description": "Toza sabzi",
+    "price": 6000,
+    "category": "Sabzavotlar",
+    "stock": 100,
+    "unit": "kg"
+  },
+  {
+    "id": "9",
+    "name": "Sut (1 litr)",
+    "description": "Toza sigir suti",
+    "price": 12000,
+    "category": "Sut mahsulotlari",
+    "stock": 50,
+    "unit": "dona"
+  },
+  {
+    "id": "10",
+    "name": "Qatiq (1 kg)",
+    "description": "Uy qatiqi",
+    "price": 18000,
+    "category": "Sut mahsulotlari",
+    "stock": 40,
+    "unit": "dona"
+  },
+  {
+    "id": "11",
+    "name": "Pishloq (1 kg)",
+    "description": "Mahalliy pishloq",
+    "price": 85000,
+    "category": "Sut mahsulotlari",
+    "stock": 25,
+    "unit": "kg"
+  },
+  {
+    "id": "12",
+    "name": "O'zbek noni",
+    "description": "An'anaviy tandirda pishirilgan non",
+    "price": 5000,
+    "category": "Non mahsulotlari",
+    "stock": 100,
+    "unit": "dona"
+  },
+  {
+    "id": "13",
+    "name": "Patir",
+    "description": "Yumshoq patir",
+    "price": 8000,
+    "category": "Non mahsulotlari",
+    "stock": 60,
+    "unit": "dona"
+  },
+  {
+    "id": "14",
+    "name": "Mol go'shti",
+    "description": "Yangi mol go'shti",
+    "price": 95000,
+    "category": "Go'sht mahsulotlari",
+    "stock": 30,
+    "unit": "kg"
+  },
+  {
+    "id": "15",
+    "name": "Tovuq go'shti",
+    "description": "Broiler tovuq",
+    "price": 45000,
+    "category": "Go'sht mahsulotlari",
+    "stock": 50,
+    "unit": "kg"
+  },
+  {
+    "id": "16",
+    "name": "Olma sharbati (1L)",
+    "description": "100% natural olma sharbati",
+    "price": 15000,
+    "category": "Ichimliklar",
+    "stock": 80,
+    "unit": "dona"
+  },
+  {
+    "id": "17",
+    "name": "Mineral suv (1.5L)",
+    "description": "Gazlangan mineral suv",
+    "price": 5000,
+    "category": "Ichimliklar",
+    "stock": 200,
+    "unit": "dona"
+  }
+]
