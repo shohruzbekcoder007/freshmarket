@@ -1,12 +1,10 @@
-import { db } from "./db";
-import { eq, and, desc } from "drizzle-orm";
 import {
-  users,
-  categories,
-  products,
-  cartItems,
-  orders,
-  orderItems,
+  UserModel,
+  CategoryModel,
+  ProductModel,
+  CartItemModel,
+  OrderModel,
+  OrderItemModel,
   type User,
   type InsertUser,
   type Category,
@@ -23,6 +21,78 @@ import {
   type CartItemWithProduct,
   type OrderWithItems,
 } from "@shared/schema";
+
+// Helper function to convert MongoDB document to plain object
+function toUser(doc: any): User {
+  return {
+    id: doc._id.toString(),
+    username: doc.username,
+    email: doc.email,
+    password: doc.password,
+    role: doc.role,
+    phone: doc.phone || null,
+    address: doc.address || null,
+    createdAt: doc.createdAt || null,
+  };
+}
+
+function toCategory(doc: any): Category {
+  return {
+    id: doc._id.toString(),
+    name: doc.name,
+    description: doc.description || null,
+    image: doc.image || null,
+  };
+}
+
+function toProduct(doc: any): Product {
+  return {
+    id: doc._id.toString(),
+    name: doc.name,
+    description: doc.description || null,
+    price: doc.price.toString(),
+    image: doc.image || null,
+    categoryId: doc.categoryId?.toString() || null,
+    stock: doc.stock || 0,
+    unit: doc.unit || "dona",
+    isActive: doc.isActive ?? true,
+    createdAt: doc.createdAt || null,
+  };
+}
+
+function toCartItem(doc: any): CartItem {
+  return {
+    id: doc._id.toString(),
+    userId: doc.userId.toString(),
+    productId: doc.productId.toString(),
+    quantity: doc.quantity,
+  };
+}
+
+function toOrder(doc: any): Order {
+  return {
+    id: doc._id.toString(),
+    userId: doc.userId.toString(),
+    status: doc.status,
+    totalAmount: doc.totalAmount.toString(),
+    shippingAddress: doc.shippingAddress,
+    phone: doc.phone,
+    notes: doc.notes || null,
+    createdAt: doc.createdAt || null,
+    updatedAt: doc.updatedAt || null,
+  };
+}
+
+function toOrderItem(doc: any): OrderItem {
+  return {
+    id: doc._id.toString(),
+    orderId: doc.orderId.toString(),
+    productId: doc.productId.toString(),
+    quantity: doc.quantity,
+    price: doc.price.toString(),
+    productName: doc.productName,
+  };
+}
 
 export interface IStorage {
   // Users
@@ -66,134 +136,156 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   // Users
   async getUser(id: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.id, id));
-    return result[0];
+    const doc = await UserModel.findById(id);
+    return doc ? toUser(doc) : undefined;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.email, email));
-    return result[0];
+    const doc = await UserModel.findOne({ email });
+    return doc ? toUser(doc) : undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.username, username));
-    return result[0];
+    const doc = await UserModel.findOne({ username });
+    return doc ? toUser(doc) : undefined;
   }
 
   async createUser(user: InsertUser): Promise<User> {
-    const result = await db.insert(users).values(user).returning();
-    return result[0];
+    const doc = await UserModel.create(user);
+    return toUser(doc);
   }
 
   async getAllUsers(): Promise<User[]> {
-    return db.select().from(users).orderBy(desc(users.createdAt));
+    const docs = await UserModel.find().sort({ createdAt: -1 });
+    return docs.map(toUser);
   }
 
   // Categories
   async getCategories(): Promise<Category[]> {
-    return db.select().from(categories);
+    const docs = await CategoryModel.find();
+    return docs.map(toCategory);
   }
 
   async getCategory(id: string): Promise<Category | undefined> {
-    const result = await db.select().from(categories).where(eq(categories.id, id));
-    return result[0];
+    const doc = await CategoryModel.findById(id);
+    return doc ? toCategory(doc) : undefined;
   }
 
   async createCategory(category: InsertCategory): Promise<Category> {
-    const result = await db.insert(categories).values(category).returning();
-    return result[0];
+    const doc = await CategoryModel.create(category);
+    return toCategory(doc);
   }
 
   async updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined> {
-    const result = await db.update(categories).set(category).where(eq(categories.id, id)).returning();
-    return result[0];
+    const doc = await CategoryModel.findByIdAndUpdate(id, category, { new: true });
+    return doc ? toCategory(doc) : undefined;
   }
 
   async deleteCategory(id: string): Promise<void> {
-    await db.delete(categories).where(eq(categories.id, id));
+    await CategoryModel.findByIdAndDelete(id);
   }
 
   // Products
   async getProducts(): Promise<ProductWithCategory[]> {
-    const result = await db
-      .select()
-      .from(products)
-      .leftJoin(categories, eq(products.categoryId, categories.id))
-      .orderBy(desc(products.createdAt));
-    
-    return result.map((row) => ({
-      ...row.products,
-      category: row.categories || undefined,
-    }));
+    const docs = await ProductModel.find().sort({ createdAt: -1 });
+    const result: ProductWithCategory[] = [];
+
+    for (const doc of docs) {
+      const product = toProduct(doc);
+      let category: Category | undefined;
+
+      if (doc.categoryId) {
+        const categoryDoc = await CategoryModel.findById(doc.categoryId);
+        if (categoryDoc) {
+          category = toCategory(categoryDoc);
+        }
+      }
+
+      result.push({ ...product, category });
+    }
+
+    return result;
   }
 
   async getProduct(id: string): Promise<ProductWithCategory | undefined> {
-    const result = await db
-      .select()
-      .from(products)
-      .leftJoin(categories, eq(products.categoryId, categories.id))
-      .where(eq(products.id, id));
-    
-    if (!result[0]) return undefined;
-    
-    return {
-      ...result[0].products,
-      category: result[0].categories || undefined,
-    };
+    const doc = await ProductModel.findById(id);
+    if (!doc) return undefined;
+
+    const product = toProduct(doc);
+    let category: Category | undefined;
+
+    if (doc.categoryId) {
+      const categoryDoc = await CategoryModel.findById(doc.categoryId);
+      if (categoryDoc) {
+        category = toCategory(categoryDoc);
+      }
+    }
+
+    return { ...product, category };
   }
 
   async createProduct(product: InsertProduct): Promise<Product> {
-    const result = await db.insert(products).values(product).returning();
-    return result[0];
+    const doc = await ProductModel.create({
+      ...product,
+      price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
+    });
+    return toProduct(doc);
   }
 
   async updateProduct(id: string, product: Partial<InsertProduct>): Promise<Product | undefined> {
-    const result = await db.update(products).set(product).where(eq(products.id, id)).returning();
-    return result[0];
+    const updateData: any = { ...product };
+    if (product.price !== undefined) {
+      updateData.price = typeof product.price === 'string' ? parseFloat(product.price) : product.price;
+    }
+    const doc = await ProductModel.findByIdAndUpdate(id, updateData, { new: true });
+    return doc ? toProduct(doc) : undefined;
   }
 
   async deleteProduct(id: string): Promise<void> {
-    await db.delete(products).where(eq(products.id, id));
+    await ProductModel.findByIdAndDelete(id);
   }
 
   // Cart
   async getCartItems(userId: string): Promise<CartItemWithProduct[]> {
-    const result = await db
-      .select()
-      .from(cartItems)
-      .innerJoin(products, eq(cartItems.productId, products.id))
-      .where(eq(cartItems.userId, userId));
-    
-    return result.map((row) => ({
-      ...row.cart_items,
-      product: row.products,
-    }));
+    const docs = await CartItemModel.find({ userId });
+    const result: CartItemWithProduct[] = [];
+
+    for (const doc of docs) {
+      const cartItem = toCartItem(doc);
+      const productDoc = await ProductModel.findById(doc.productId);
+
+      if (productDoc) {
+        result.push({
+          ...cartItem,
+          product: toProduct(productDoc),
+        });
+      }
+    }
+
+    return result;
   }
 
   async getCartItem(id: string): Promise<CartItem | undefined> {
-    const result = await db.select().from(cartItems).where(eq(cartItems.id, id));
-    return result[0];
+    const doc = await CartItemModel.findById(id);
+    return doc ? toCartItem(doc) : undefined;
   }
 
   async addToCart(item: InsertCartItem): Promise<CartItem> {
     // Check if item already exists
-    const existing = await db
-      .select()
-      .from(cartItems)
-      .where(and(eq(cartItems.userId, item.userId), eq(cartItems.productId, item.productId)));
-    
-    if (existing[0]) {
+    const existing = await CartItemModel.findOne({
+      userId: item.userId,
+      productId: item.productId,
+    });
+
+    if (existing) {
       // Update quantity
-      const result = await db
-        .update(cartItems)
-        .set({ quantity: existing[0].quantity + (item.quantity || 1) })
-        .where(eq(cartItems.id, existing[0].id))
-        .returning();
-      return result[0];
+      existing.quantity += item.quantity || 1;
+      await existing.save();
+      return toCartItem(existing);
     }
-    
-    const result = await db.insert(cartItems).values(item).returning();
-    return result[0];
+
+    const doc = await CartItemModel.create(item);
+    return toCartItem(doc);
   }
 
   async updateCartItem(id: string, quantity: number): Promise<CartItem | undefined> {
@@ -201,105 +293,110 @@ export class DatabaseStorage implements IStorage {
       await this.removeFromCart(id);
       return undefined;
     }
-    const result = await db.update(cartItems).set({ quantity }).where(eq(cartItems.id, id)).returning();
-    return result[0];
+    const doc = await CartItemModel.findByIdAndUpdate(id, { quantity }, { new: true });
+    return doc ? toCartItem(doc) : undefined;
   }
 
   async removeFromCart(id: string): Promise<void> {
-    await db.delete(cartItems).where(eq(cartItems.id, id));
+    await CartItemModel.findByIdAndDelete(id);
   }
 
   async clearCart(userId: string): Promise<void> {
-    await db.delete(cartItems).where(eq(cartItems.userId, userId));
+    await CartItemModel.deleteMany({ userId });
   }
 
   // Orders
   async getOrders(userId: string): Promise<OrderWithItems[]> {
-    const ordersResult = await db
-      .select()
-      .from(orders)
-      .where(eq(orders.userId, userId))
-      .orderBy(desc(orders.createdAt));
-    
+    const orderDocs = await OrderModel.find({ userId }).sort({ createdAt: -1 });
     const result: OrderWithItems[] = [];
-    for (const order of ordersResult) {
-      const items = await db
-        .select()
-        .from(orderItems)
-        .leftJoin(products, eq(orderItems.productId, products.id))
-        .where(eq(orderItems.orderId, order.id));
-      
-      result.push({
-        ...order,
-        items: items.map((item) => ({
-          ...item.order_items,
-          product: item.products || undefined,
-        })),
-      });
+
+    for (const orderDoc of orderDocs) {
+      const order = toOrder(orderDoc);
+      const itemDocs = await OrderItemModel.find({ orderId: orderDoc._id });
+
+      const items: (OrderItem & { product?: Product })[] = [];
+      for (const itemDoc of itemDocs) {
+        const item = toOrderItem(itemDoc);
+        const productDoc = await ProductModel.findById(itemDoc.productId);
+        items.push({
+          ...item,
+          product: productDoc ? toProduct(productDoc) : undefined,
+        });
+      }
+
+      result.push({ ...order, items });
     }
-    
+
     return result;
   }
 
   async getAllOrders(): Promise<OrderWithItems[]> {
-    const ordersResult = await db.select().from(orders).orderBy(desc(orders.createdAt));
-    
+    const orderDocs = await OrderModel.find().sort({ createdAt: -1 });
     const result: OrderWithItems[] = [];
-    for (const order of ordersResult) {
-      const items = await db
-        .select()
-        .from(orderItems)
-        .leftJoin(products, eq(orderItems.productId, products.id))
-        .where(eq(orderItems.orderId, order.id));
-      
-      result.push({
-        ...order,
-        items: items.map((item) => ({
-          ...item.order_items,
-          product: item.products || undefined,
-        })),
-      });
+
+    for (const orderDoc of orderDocs) {
+      const order = toOrder(orderDoc);
+      const itemDocs = await OrderItemModel.find({ orderId: orderDoc._id });
+
+      const items: (OrderItem & { product?: Product })[] = [];
+      for (const itemDoc of itemDocs) {
+        const item = toOrderItem(itemDoc);
+        const productDoc = await ProductModel.findById(itemDoc.productId);
+        items.push({
+          ...item,
+          product: productDoc ? toProduct(productDoc) : undefined,
+        });
+      }
+
+      result.push({ ...order, items });
     }
-    
+
     return result;
   }
 
   async getOrder(id: string): Promise<OrderWithItems | undefined> {
-    const orderResult = await db.select().from(orders).where(eq(orders.id, id));
-    if (!orderResult[0]) return undefined;
-    
-    const items = await db
-      .select()
-      .from(orderItems)
-      .leftJoin(products, eq(orderItems.productId, products.id))
-      .where(eq(orderItems.orderId, id));
-    
-    return {
-      ...orderResult[0],
-      items: items.map((item) => ({
-        ...item.order_items,
-        product: item.products || undefined,
-      })),
-    };
+    const orderDoc = await OrderModel.findById(id);
+    if (!orderDoc) return undefined;
+
+    const order = toOrder(orderDoc);
+    const itemDocs = await OrderItemModel.find({ orderId: orderDoc._id });
+
+    const items: (OrderItem & { product?: Product })[] = [];
+    for (const itemDoc of itemDocs) {
+      const item = toOrderItem(itemDoc);
+      const productDoc = await ProductModel.findById(itemDoc.productId);
+      items.push({
+        ...item,
+        product: productDoc ? toProduct(productDoc) : undefined,
+      });
+    }
+
+    return { ...order, items };
   }
 
   async createOrder(order: InsertOrder): Promise<Order> {
-    const result = await db.insert(orders).values(order).returning();
-    return result[0];
+    const doc = await OrderModel.create({
+      ...order,
+      totalAmount: typeof order.totalAmount === 'string' ? parseFloat(order.totalAmount) : order.totalAmount,
+    });
+    return toOrder(doc);
   }
 
   async updateOrderStatus(id: string, status: string): Promise<Order | undefined> {
-    const result = await db
-      .update(orders)
-      .set({ status, updatedAt: new Date() })
-      .where(eq(orders.id, id))
-      .returning();
-    return result[0];
+    const doc = await OrderModel.findByIdAndUpdate(
+      id,
+      { status, updatedAt: new Date() },
+      { new: true }
+    );
+    return doc ? toOrder(doc) : undefined;
   }
 
   async createOrderItem(item: InsertOrderItem): Promise<OrderItem> {
-    const result = await db.insert(orderItems).values(item).returning();
-    return result[0];
+    const doc = await OrderItemModel.create({
+      ...item,
+      price: typeof item.price === 'string' ? parseFloat(item.price) : item.price,
+    });
+    return toOrderItem(doc);
   }
 }
 
