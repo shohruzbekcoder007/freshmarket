@@ -1,7 +1,6 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingCart, User, LogOut, Settings, Menu, Search, Package } from "lucide-react";
+import { ShoppingCart, User, LogOut, Settings, Menu, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "./theme-toggle";
 import { useAuth } from "@/lib/auth";
@@ -17,14 +16,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import type { CartItem } from "@shared/schema";
 
-interface HeaderProps {
-  onSearch?: (query: string) => void;
-}
-
-export function Header({ onSearch }: HeaderProps) {
+export function Header() {
   const { user, logout, isAdmin } = useAuth();
   const [, setLocation] = useLocation();
-  const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const { data: cartItems = [] } = useQuery<CartItem[]>({
@@ -33,11 +27,6 @@ export function Header({ onSearch }: HeaderProps) {
   });
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch?.(searchQuery);
-  };
 
   const handleLogout = () => {
     logout();
@@ -106,20 +95,6 @@ export function Header({ onSearch }: HeaderProps) {
               </Link>
             </nav>
           </div>
-
-          <form onSubmit={handleSearch} className="hidden sm:flex flex-1 max-w-md">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Mahsulot qidirish..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-                data-testid="input-search"
-              />
-            </div>
-          </form>
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
